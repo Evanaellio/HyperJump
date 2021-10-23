@@ -13,7 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <BoneworksFolder>G:\SteamLibrary\steamapps\common\BONEWORKS\BONEWORKS</BoneworksFolder>
+    <BoneworksFolder>C:\Program Files (x86)\Steam\steamapps\common\BONEWORKS\BONEWORKS</BoneworksFolder>
+    <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,7 +74,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY "$(TargetPath)" "$(BoneworksFolder)\Mods"</PostBuildEvent>
-    <PostBuildEvent>COPY "$(TargetPath)" "$(MSBuildProjectDirectory)\..\ThunderstorePackage\Mods"</PostBuildEvent>
+    <PostBuildEvent>
+      COPY "$(TargetPath)" "$(BoneworksFolder)\Mods"
+      COPY "$(TargetPath)" "$(MSBuildProjectDirectory)\..\ThunderstorePackage\Mods"
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
