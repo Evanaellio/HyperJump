@@ -1,4 +1,4 @@
 # HyperJump
-A simple Boneworks mod to jump higher and leap further.
+A simple Bonelab mod to jump higher and leap further.
 
-Download here : https://boneworks.thunderstore.io/package/Evanaellio/HyperJump/
+Download here : https://bonelab.thunderstore.io/package/Evanaellio/HyperJump/
