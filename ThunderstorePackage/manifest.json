@@ -1,7 +1,7 @@
 {
 	"name": "HyperJump",
-	"version_number": "1.1.0",
+	"version_number": "2.0.0",
 	"description": "Jump higher and leap further",
 	"website_url": "https://github.com/Evanaellio/HyperJump",
-	"dependencies": ["gnonme-ModThatIsNotMod-0.2.4"]
+	"dependencies": []
 }

@@ -1,10 +1,12 @@
-﻿using MelonLoader;
-using StressLevelZero.Rig;
+﻿using System.Collections.Generic;
+using MelonLoader;
+using SLZ.Rig;
 using UnityEngine;
 using HarmonyLib;
 using Il2CppSystem;
-using StressLevelZero.VRMK;
-using Object = UnityEngine.Object;
+using SLZ.VRMK;
+using UnityObject = UnityEngine.Object;
+using Enum = System.Enum;
 
 namespace Evanaellio.HyperJump
 {
@@ -13,119 +15,134 @@ namespace Evanaellio.HyperJump
         public const string Name = "Hyper Jump";
         public const string Author = "Evanaellio";
         public const string Company = null;
-        public const string Version = "1.1.0";
-        public const string DownloadLink = "https://boneworks.thunderstore.io/package/Evanaellio/HyperJump/";
+        public const string Version = "2.0.0";
+        public const string DownloadLink = "https://bonelab.thunderstore.io/package/Evanaellio/HyperJump/";
     }
 
     public class HyperJump : MelonMod
     {
         private const string HyperJumpCategory = nameof(HyperJump);
+        private const string CustomProfileCategory = "HyperJumpCustomProfile";
 
-        public static float UpwardJumpMultiplier
+        public static ProfilesEnum ActiveProfile
         {
-            get => MelonPreferences.GetEntryValue<float>(HyperJumpCategory, nameof(UpwardJumpMultiplier));
-            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(UpwardJumpMultiplier), value);
+            get
+            {
+                string activeProfile = MelonPreferences.GetEntryValue<string>(HyperJumpCategory, nameof(ActiveProfile));
+                if (Enum.TryParse(activeProfile, true, out ProfilesEnum profile))
+                {
+                    return profile;
+                }
+
+                MelonLogger.Warning($"Invalid profile '{activeProfile}', using the default profile instead");
+                return ProfilesEnum.Default;
+            }
+
+            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(ActiveProfile), value.ToString().ToLowerInvariant());
         }
 
-        public static float ForwardLeapMultiplier
+        public class Profile
         {
-            get => MelonPreferences.GetEntryValue<float>(HyperJumpCategory, nameof(ForwardLeapMultiplier));
-            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(ForwardLeapMultiplier), value);
+            public float UpwardJumpMultiplier { get; set; }
+            public float ForwardLeapMultiplier { get; set; }
+            public float JumpChargingTime { get; set; }
         }
 
-        public static bool HyperJumpEnabled
+        private static readonly Profile DefaultProfile = new Profile()
         {
-            get => MelonPreferences.GetEntryValue<bool>(HyperJumpCategory, nameof(HyperJumpEnabled));
-            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(HyperJumpEnabled), value);
+            UpwardJumpMultiplier = 90f, ForwardLeapMultiplier = 18f, JumpChargingTime = 1.5f,
+        };
+
+        private static readonly Profile InstantProfile = new Profile()
+        {
+            UpwardJumpMultiplier = DefaultProfile.UpwardJumpMultiplier, ForwardLeapMultiplier = DefaultProfile.ForwardLeapMultiplier, JumpChargingTime = 0f,
+        };
+
+        public static readonly Dictionary<ProfilesEnum, Profile> Profiles = new Dictionary<ProfilesEnum, Profile>()
+        {
+            {ProfilesEnum.Default, DefaultProfile},
+            {ProfilesEnum.Instant, InstantProfile},
+        };
+
+
+        public enum ProfilesEnum
+        {
+            Default,
+            Instant,
+            Disabled,
+            Custom
         }
 
-        public static bool JumpChargingEnabled
-        {
-            get => MelonPreferences.GetEntryValue<bool>(HyperJumpCategory, nameof(JumpChargingEnabled));
-            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(JumpChargingEnabled), value);
-        }
-
-        public static float JumpChargingTime
-        {
-            get => MelonPreferences.GetEntryValue<float>(HyperJumpCategory, nameof(JumpChargingTime));
-            set => MelonPreferences.SetEntryValue(HyperJumpCategory, nameof(JumpChargingTime), value);
-        }
-
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
             // Create MelonPreferences default values (if they don't exist already)
             MelonPreferences.CreateCategory(HyperJumpCategory);
-            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(UpwardJumpMultiplier), 16f);
-            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(ForwardLeapMultiplier), 3f);
-            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(JumpChargingEnabled), true);
-            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(JumpChargingTime), 1.5f);
-            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(HyperJumpEnabled), true);
+            MelonPreferences.CreateCategory(CustomProfileCategory);
+            MelonPreferences.CreateEntry(HyperJumpCategory, nameof(ActiveProfile), "default");
+            MelonPreferences.CreateEntry(CustomProfileCategory, nameof(Profile.UpwardJumpMultiplier), DefaultProfile.UpwardJumpMultiplier);
+            MelonPreferences.CreateEntry(CustomProfileCategory, nameof(Profile.ForwardLeapMultiplier), DefaultProfile.ForwardLeapMultiplier);
+            MelonPreferences.CreateEntry(CustomProfileCategory, nameof(Profile.JumpChargingTime), DefaultProfile.JumpChargingTime);
 
-            // ModThatIsNotMod Menu
-            ModThatIsNotMod.BoneMenu.MenuCategory category =
-                ModThatIsNotMod.BoneMenu.MenuManager.CreateCategory("Hyper Jump", Color.green);
-            category.CreateFloatElement("Upward Jump Multiplier", Color.white, UpwardJumpMultiplier,
-                newValue => UpwardJumpMultiplier = newValue, 4f, 0f, 40f, true);
-            category.CreateFloatElement("Forward Leap Multiplier", Color.white, ForwardLeapMultiplier,
-                newValue => ForwardLeapMultiplier = newValue, 0.5f, 0f, 5f, true);
-            category.CreateBoolElement("Enable Jump Charging", Color.white, JumpChargingEnabled,
-                newValue => JumpChargingEnabled = newValue);
-            category.CreateFloatElement("Jump Charging Time (seconds)", Color.white, JumpChargingTime,
-                newValue => JumpChargingTime = newValue, 0.5f, 0f, 4f, true);
-            category.CreateBoolElement("Enable Hyper Jump", Color.red, HyperJumpEnabled,
-                newValue => HyperJumpEnabled = newValue);
-        }
-    }
-
-    [HarmonyPatch(typeof(ControllerRig), "Jump")]
-    class ControllerRigJumpPatch
-    {
-        public static void Postfix(ControllerRig __instance)
-        {
-            if (!HyperJump.HyperJumpEnabled) return;
-
-            var physGrounder = Object.FindObjectOfType<PhysGrounder>();
-
-            // Only jump when on the ground
-            if (physGrounder.isGrounded)
+            Profiles.Add(ProfilesEnum.Custom, new Profile
             {
-                PhysicsRig rig = Object.FindObjectOfType<PhysicsRig>();
-
-                float jumpChargeRatio = 1f;
-                
-                // Compute jump charging ratio (between 0 and 1) if charging is enabled
-                if (HyperJump.JumpChargingEnabled)
-                {
-                    TimeSpan jumpChargeDuration =
-                        (DateTime.Now - ControllerRigJumpChargePatch.jumpChargeStartedDate) ?? TimeSpan.Zero;
-                    jumpChargeRatio = Mathf.InverseLerp(0.0f, HyperJump.JumpChargingTime * 1000, (float) jumpChargeDuration.TotalMilliseconds);
-                }
-
-                // Compute velocity vectors for jumping (up) and leaping (forward)
-                float walkSpeed = new Vector3(rig.pelvisVelocity.x, 0, rig.pelvisVelocity.z).magnitude;
-                Vector3 forwardJump = __instance.m_head.forward * walkSpeed * HyperJump.ForwardLeapMultiplier;
-                Vector3 verticalJump = Vector3.up * HyperJump.UpwardJumpMultiplier;
-                
-                // Apply jump velocity to the player
-                rig.physBody.rbPelvis.AddForce((verticalJump + forwardJump) * jumpChargeRatio, ForceMode.VelocityChange);
-            }
+                UpwardJumpMultiplier = MelonPreferences.GetEntryValue<float>(CustomProfileCategory, nameof(Profile.UpwardJumpMultiplier)),
+                ForwardLeapMultiplier = MelonPreferences.GetEntryValue<float>(CustomProfileCategory, nameof(Profile.ForwardLeapMultiplier)),
+                JumpChargingTime = MelonPreferences.GetEntryValue<float>(CustomProfileCategory, nameof(Profile.JumpChargingTime)),
+            });
         }
     }
 
     [HarmonyPatch(typeof(ControllerRig), "JumpCharge")]
     class ControllerRigJumpChargePatch
     {
-        public static DateTime? jumpChargeStartedDate = null;
+        public static DateTime? JumpChargeStartedDate = null;
 
         public static void Postfix(ControllerRig __instance, bool chargeInput)
         {
+            // Skip HyperJump behaviour for the disabled profile
+            if (HyperJump.ActiveProfile.Equals(HyperJump.ProfilesEnum.Disabled)) return;
+            HyperJump.Profile currentProfile = HyperJump.Profiles[HyperJump.ActiveProfile];
+
             // chargeInput is true when the jump button is being pressed
-            if (chargeInput && !jumpChargeStartedDate.HasValue)
+            if (chargeInput && !JumpChargeStartedDate.HasValue)
             {
-                jumpChargeStartedDate = DateTime.Now;
-            } else if (!chargeInput && jumpChargeStartedDate.HasValue)
+                JumpChargeStartedDate = DateTime.Now;
+            }
+            else if (!chargeInput && JumpChargeStartedDate.HasValue)
             {
-                jumpChargeStartedDate = null;
+                // When jump button is released, trigger hyper jump then reset jump charging 
+                TriggerHyperJump(__instance, currentProfile);
+                JumpChargeStartedDate = null;
+            }
+        }
+
+        private static void TriggerHyperJump(ControllerRig controllerRig, HyperJump.Profile profile)
+        {
+            var physGrounder = UnityObject.FindObjectOfType<PhysGrounder>();
+            // Only jump when on the ground
+            if (physGrounder.isGrounded)
+            {
+                PhysicsRig rig = UnityObject.FindObjectOfType<PhysicsRig>();
+
+                float jumpChargeRatio = 1f;
+
+                // Compute jump charging ratio (between 0 and 1) if charging is enabled (charging time greater than 0)
+                if (profile.JumpChargingTime > 0)
+                {
+                    TimeSpan jumpChargeDuration =
+                        (DateTime.Now - JumpChargeStartedDate) ?? TimeSpan.Zero;
+                    jumpChargeRatio = Mathf.InverseLerp(0.0f, profile.JumpChargingTime * 1000,
+                        (float) jumpChargeDuration.TotalMilliseconds);
+                }
+
+                // Compute velocity vectors for jumping (up) and leaping (forward)
+                float walkSpeed = new Vector3(rig.pelvisVelocity.x, 0, rig.pelvisVelocity.z).magnitude;
+                Vector3 forwardJump = controllerRig.m_head.forward * walkSpeed * profile.ForwardLeapMultiplier;
+                Vector3 verticalJump = Vector3.up * profile.UpwardJumpMultiplier;
+
+                // Apply jump velocity to the player
+                rig.torso.rbPelvis.AddForce((verticalJump + forwardJump) * jumpChargeRatio,
+                    ForceMode.VelocityChange);
             }
         }
     }
