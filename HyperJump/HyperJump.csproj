@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <BoneworksFolder>C:\Program Files (x86)\Steam\steamapps\common\BONEWORKS\BONEWORKS</BoneworksFolder>
+    <BonelabFolder>C:\Program Files (x86)\Steam\steamapps\common\BONELAB</BonelabFolder>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,17 +36,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>$(BonelabFolder)\MelonLoader\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>$(BoneworksFolder)\MelonLoader\MelonLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="ModThatIsNotMod">
-      <HintPath>$(BoneworksFolder)\Mods\ModThatIsNotMod.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,16 +56,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>$(BoneworksFolder)\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +75,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      COPY "$(TargetPath)" "$(BoneworksFolder)\Mods"
+      COPY "$(TargetPath)" "$(BonelabFolder)\Mods"
       COPY "$(TargetPath)" "$(MSBuildProjectDirectory)\..\ThunderstorePackage\Mods"
     </PostBuildEvent>
   </PropertyGroup>
