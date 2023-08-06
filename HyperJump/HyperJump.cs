@@ -23,6 +23,7 @@ namespace Evanaellio.HyperJump
     public class HyperJump : MelonMod
     {
         private const string HyperJumpCategory = nameof(HyperJump);
+        private const string CustomProfileCategory = "HyperJumpCustomProfile";
 
         private static readonly string[] CustomProfileCategories =
         {
