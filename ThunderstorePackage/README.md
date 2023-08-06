@@ -29,6 +29,10 @@ ActiveProfile can take the following values :
 
 ## Changelogs
 
+#### v3.0.1
+
+- Fix dependency to BoneLib for compatibility with Patch 2
+
 #### v3.0.0
 
 - Make compatible with both BONEWORKS and BONELAB
