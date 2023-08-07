@@ -1,7 +1,7 @@
 {
 	"name": "HyperJump",
-	"version_number": "3.0.1",
+	"version_number": "3.1.0",
 	"description": "Jump higher and leap further",
 	"website_url": "https://github.com/Evanaellio/HyperJump",
-	"dependencies": ["gnonme-ModThatIsNotMod-0.3.6", "gnonme-BoneLib-2.2.0"]
+	"dependencies": ["LavaGang-MelonLoader-0.5.7", "gnonme-ModThatIsNotMod-0.3.6", "gnonme-BoneLib-2.2.1"]
 }

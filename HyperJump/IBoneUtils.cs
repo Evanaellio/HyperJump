@@ -20,7 +20,7 @@ namespace Evanaellio.HyperJump
 
     public interface IBoneUtils
     {
-        MethodInfo GetControllerRigMethod(string methodName);
+        MethodInfo GetJumpChargeMethod();
         Vector3 GetPelvisVelocity();
         Vector3 GetHeadDirection();
         void ApplyForceToPelvis(Vector3 force, ForceMode velocityChange);

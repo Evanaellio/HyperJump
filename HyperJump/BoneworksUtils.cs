@@ -16,9 +16,9 @@ namespace Evanaellio.HyperJump
         public ControllerRig ControllerRig => UnityObject.FindObjectOfType<ControllerRig>();
         public PhysGrounder PhysGrounder => UnityObject.FindObjectOfType<PhysGrounder>();
 
-        public MethodInfo GetControllerRigMethod(string methodName)
+        public MethodInfo GetJumpChargeMethod()
         {
-            return typeof(ControllerRig).GetMethod(methodName);
+            return typeof(ControllerRig).GetMethod("JumpCharge");
         }
 
         public Vector3 GetPelvisVelocity()

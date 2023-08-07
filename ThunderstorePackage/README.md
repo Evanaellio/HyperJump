@@ -4,6 +4,8 @@ Jump higher and leap further.
 
 To install the mod, copy the Mods folder inside the zip into your BONEWORKS or BONELAB directory.
 
+⚠ Use versions 3.0.x for BONELAB Patch 2 and versions 3.1.x for BONELAB Patch 3, and any of versions 3.x for BONEWORKS
+
 Hyper jumps and leaps are best used in exterior environments (unless you like fracturing your skull on the ceiling or smashing your face against a wall).
 
 Hyper leaps only apply when walking/running, and will propel you towards where you are looking.
@@ -28,6 +30,10 @@ ActiveProfile can take the following values :
 | JumpChargingTime      | How many seconds to hold the jump button until you reach max jump power, set to 0 for instant hyper jumps |
 
 ## Changelogs
+
+#### v3.1.0
+
+- Add compatibility with BONELAB Patch 3
 
 #### v3.0.1
 

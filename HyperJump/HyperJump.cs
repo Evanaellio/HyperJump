@@ -16,14 +16,13 @@ namespace Evanaellio.HyperJump
         public const string Name = "Hyper Jump";
         public const string Author = "Evanaellio";
         public const string Company = null;
-        public const string Version = "3.0.0";
+        public const string Version = "3.1.0";
         public const string DownloadLink = "https://bonelab.thunderstore.io/package/Evanaellio/HyperJump/";
     }
 
     public class HyperJump : MelonMod
     {
         private const string HyperJumpCategory = nameof(HyperJump);
-        private const string CustomProfileCategory = "HyperJumpCustomProfile";
 
         private static readonly string[] CustomProfileCategories =
         {
@@ -145,7 +144,7 @@ namespace Evanaellio.HyperJump
             BoneUtils.SetupMenu(profileSetting, customProfileSettings);
 
             HarmonyMethod jumpChargePostfix = new HarmonyMethod(typeof(HyperJump).GetMethod(nameof(JumpChargePostfix)));
-            MethodInfo jumpChargeMethod = BoneUtils.GetControllerRigMethod("JumpCharge");
+            MethodInfo jumpChargeMethod = BoneUtils.GetJumpChargeMethod();
             HarmonyInstance.Patch(jumpChargeMethod, null, jumpChargePostfix);
         }
 

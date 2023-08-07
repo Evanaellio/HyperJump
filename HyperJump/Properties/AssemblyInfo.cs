@@ -24,3 +24,6 @@ using System.Runtime.InteropServices;
 // Values for MelonModGame can be found in the Game's app.info file or printed at the top of every log directly beneath the Unity version.
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
 [assembly: MelonGame("Stress Level Zero", "BONEWORKS")]
+
+// Mark as optional so that MelonLoader doesn't complain but ModThatIsNotMod is required for BONEWORKS and BoneLib is required for BONELAB
+[assembly: MelonOptionalDependencies("ModThatIsNotMod", "BoneLib")]
