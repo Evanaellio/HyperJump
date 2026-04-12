@@ -31,6 +31,11 @@ ActiveProfile can take the following values :
 
 ## Changelogs
 
+#### v4.0.0
+
+- Add compatibility with BONELAB Patch 6
+- Drop compatibility with BONEWORKS, it was an interesting experiment but hard to maintain
+
 #### v3.1.0
 
 - Add compatibility with BONELAB Patch 3
