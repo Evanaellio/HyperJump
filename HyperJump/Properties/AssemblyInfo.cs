@@ -1,7 +1,7 @@
-﻿using MelonLoader;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
+using MelonLoader;
 
 [assembly: AssemblyTitle(Evanaellio.HyperJump.BuildInfo.Name)]
 [assembly: AssemblyDescription("")]
@@ -23,7 +23,3 @@ using System.Runtime.InteropServices;
 // If no MelonModGameAttribute is found or any of the Values for any MelonModGame on the Mod is null or empty it will be assumed the Mod is Universal.
 // Values for MelonModGame can be found in the Game's app.info file or printed at the top of every log directly beneath the Unity version.
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
-[assembly: MelonGame("Stress Level Zero", "BONEWORKS")]
-
-// Mark as optional so that MelonLoader doesn't complain but ModThatIsNotMod is required for BONEWORKS and BoneLib is required for BONELAB
-[assembly: MelonOptionalDependencies("ModThatIsNotMod", "BoneLib")]

@@ -1,99 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{25442A7D-0BE5-4B89-AA4A-7FFAA7AA1FAC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Evanaellio.HyperJump</RootNamespace>
-    <AssemblyName>HyperJump</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <BonelabFolder>G:\SteamLibrary\steamapps\common\BONELAB</BonelabFolder>
-    <BoneworksFolder>G:\SteamLibrary\steamapps\common\BONEWORKS\BONEWORKS</BoneworksFolder>
-    <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFramework>net6</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+     <RootNamespace>Evanaellio.HyperJump</RootNamespace> 
+     <AssemblyName>HyperJump</AssemblyName> 
+    <BONELAB_DIR>G:\SteamLibrary\steamapps\common\BONELAB</BONELAB_DIR>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>$(BonelabFolder)\MelonLoader\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=a42eb1f786a3d256">
-      <HintPath>..\Assembly-CSharp-Boneworks.dll</HintPath>
-      <Aliases>boneworks</Aliases>
-    </Reference>
-    <Reference Include="ModThatIsNotMod, Version=0.3.6.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>$(BoneworksFolder)\Mods\ModThatIsNotMod.dll</HintPath>
+    <Reference Include="0Harmony">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
-      <Aliases>bonelab</Aliases>
-    </Reference>
-    <Reference Include="BoneLib, Version=2.2.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>$(BonelabFolder)\Mods\BoneLib.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>$(BonelabFolder)\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnhollowerBaseLib">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
+    <Reference Include="Il2CppSLZ.Algorithms">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSLZ.Marrow">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Marrow.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSLZ.Serialize">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Serialize.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Common">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="BoneLib">
+      <HintPath>$(BONELAB_DIR)\Mods\BoneLib.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>$(BonelabFolder)\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BonelabUtils.cs" />
-    <Compile Include="IBoneUtils.cs" />
-    <Compile Include="BoneworksUtils.cs" />
-    <Compile Include="HyperJump.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-      COPY "$(TargetPath)" "$(BonelabFolder)\Mods"
-      COPY "$(TargetPath)" "$(BoneworksFolder)\Mods"
-      COPY "$(TargetPath)" "$(MSBuildProjectDirectory)\..\ThunderstorePackage\Mods"
-    </PostBuildEvent>
-  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(BONELAB_DIR)\Mods&quot;"/>
+    <Exec Command="COPY &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(BONELAB_DIR)\Mods&quot;"/>
+    <Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(MSBuildProjectDirectory)\..\ThunderstorePackage\Mods&quot;"/>
+  </Target>
 </Project>
