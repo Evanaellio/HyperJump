@@ -3,5 +3,5 @@
 	"version_number": "4.0.0",
 	"description": "Jump higher and leap further",
 	"website_url": "https://github.com/Evanaellio/HyperJump",
-	"dependencies": ["LavaGang-MelonLoader-0.7.2", "gnonme-BoneLib-3.2.1"]
+	"dependencies": ["LavaGang-MelonLoader-0.7.2", "bonelib-BoneLib-3.2.1"]
 }
