@@ -157,11 +157,11 @@ public static class ProfilePreferences
             var custom = customProfileSettings[i];
 
             category.CreateFloat("Upward jump multiplier", category.Color,
-                custom.UpwardJumpMultiplier.Initial, 0.5f, 0f, 5f, custom.UpwardJumpMultiplier.Update);
+                custom.UpwardJumpMultiplier.Initial, 0.2f, 0f, 5f, custom.UpwardJumpMultiplier.Update);
             category.CreateFloat("Forward leap multiplier", category.Color,
-                custom.ForwardLeapMultiplier.Initial, 0.5f, 0f, 5f, custom.ForwardLeapMultiplier.Update);
+                custom.ForwardLeapMultiplier.Initial, 0.2f, 0f, 5f, custom.ForwardLeapMultiplier.Update);
             category.CreateFloat("Jump charge time (seconds)", category.Color,
-                custom.JumpChargingTime.Initial, 0.25f, 0f, 5f, custom.JumpChargingTime.Update);
+                custom.JumpChargingTime.Initial, 0.2f, 0f, 5f, custom.JumpChargingTime.Update);
         }
     }
 }
